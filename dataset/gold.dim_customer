@@ -1,0 +1,25 @@
+-- =============================================================================
+-- Create Dimension: gold.dim_customers
+-- =============================================================================
+if OBJECT_ID('gold.dim_customer','V') IS NOT NULL
+  drop view gold.dim_customer 
+GO
+CREATE VIEW gold.dim_customer as
+SELECT
+ROW_NUMBER() OVER(ORDER BY cst_id) As customer_key,
+ci.cst_id as customer_id,
+ci.cst_key as customer_number,
+ci.cst_firstname as first_name,
+ci.cst_lastname as last_name,
+lo.CNTRY as country,
+CASE WHEN ci.cst_gndr!='n/a' THEN cst_gndr
+     ELSE COALESCE(az.GEN,'n/a')
+END as gender,
+az.BDATE as birthdate,
+ci.cst_marital_status as marital_status,
+ci.cst_create_date as create_date
+FROM silver.crm_cust_info ci
+LEFT JOIN silver.ERP_CUST_AZ12 az
+ON  ci.cst_key=az.CID
+LEFT JOIN silver.ERP_LOC_A101 lo
+ON ci.cst_key=lo.CID
