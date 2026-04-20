@@ -1,3 +1,7 @@
+-- =============================================================================
+-- Create Dimension: gold.dim_products
+-- =============================================================================
+
 if OBJECT_ID('gold.dim_product','V') IS NOT NULL
   drop view gold.dim_product 
 GO
