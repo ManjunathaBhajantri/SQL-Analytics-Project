@@ -1,3 +1,6 @@
+-- =============================================================================
+-- Create Fact Table: gold.fact_sales
+-- =============================================================================
 if OBJECT_ID('gold.fact_sales','V') IS NOT NULL
   drop view gold.fact_sales 
 GO
